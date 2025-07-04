@@ -7,28 +7,36 @@ import TextSemiBold from '../../components/TextSemibold'
 import { API_BASE_URL } from '@env'
 import restaurantLogo from '../../../assets/restaurantLogo.jpeg'
 
-export default function RestaurantsScreen({ navigation }) {
+export default function RestaurantsScreen ({ navigation }) {
+  const [restaurants, setRestaurants] = useState([])
+  useEffect(() => {
+    console.log('Loading restaurants, please wait 2 seconds')
+    setTimeout(() => {
+      setRestaurants(getAll) // getAll function has to be imported
+      console.log('Restaurants loaded')
+    }, 2000)
+  }, [])
+  // How to render each item?
+  const renderRestaurant = ({ item }) => { // receives an item to be rendered
+    return (
+        <Pressable
+          style={styles.row}
+          onPress={() => {
+            navigation.navigate('RestaurantDetailScreen', { id: item.id }) //  When pressed, navigate to RestaurantDetailScreen
+          }}>
+            <TextRegular>
+                {item.name}
+            </TextRegular>
+        </Pressable>
+    )
+  }
   return (
-    <View style={styles.container}>
-      <TextRegular style={{ fontSize: 16, alignSelf: 'center', margin: 20 }}>Random Restaurant</TextRegular>
-      <Pressable
-        onPress={() => {
-          navigation.navigate('RestaurantDetailScreen', { id: Math.floor(Math.random() * 100) })
-        }}
-        style={({ pressed }) => [
-          {
-            backgroundColor: pressed
-              ? GlobalStyles.brandBlueTap
-              : GlobalStyles.brandBlue
-          },
-          styles.actionButton
-        ]}
-      >
-        <TextRegular textStyle={styles.text}>
-          Go to Random Restaurant Details
-        </TextRegular>
-      </Pressable>
-    </View>
+        <FlatList
+          style={styles.container}
+          data={restaurants} // array of elements to be rendered
+          renderItem={renderRestaurant} // function that receives each element
+          keyExtractor={item => item.id.toString()} // function that extracts an unique key for each element
+        />
   )
 }
 
