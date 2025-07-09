@@ -9,12 +9,12 @@ export default function RestaurantDetailScreen ({ route }) {
   useEffect(() => {
     console.log('Loading restaurant details, please wait 1 second')
     setTimeout(() => {
-      setRestaurant(getDetail(route.params.id))
+      setRestaurant(getDetail(route.params.id)) // le pasa el id recibido desde restaurantsScreen
       console.log('Restaurant details loaded')
     }, 1000)
   }, [])
   const renderProduct = ({ item }) => {
-    return (
+    return ( // Devuelve el nombre del producto y, de moemnto, no hace nada al presionar
       <Pressable
         style={styles.row}
         onPress={() => { }}>
@@ -31,8 +31,8 @@ export default function RestaurantDetailScreen ({ route }) {
             <TextRegular style={styles.text}>shippingCosts: {restaurant.shippingCosts}</TextRegular>
             <FlatList
               style={styles.container}
-              data={restaurant.products}
-              renderItem={renderProduct}
+              data={restaurant.products} // qué datos mostrar 
+              renderItem={renderProduct} // función para mostrar cada producto
               keyExtractor={item => item.id.toString()}
             />
         </View>

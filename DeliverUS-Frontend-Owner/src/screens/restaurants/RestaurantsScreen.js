@@ -8,20 +8,21 @@ import { API_BASE_URL } from '@env'
 import restaurantLogo from '../../../assets/restaurantLogo.jpeg'
 
 export default function RestaurantsScreen ({ navigation }) {
-  const [restaurants, setRestaurants] = useState([])
-  useEffect(() => {
+  const [restaurants, setRestaurants] = useState([]) // define state to safe restaurants list, initialy empty
+  useEffect(() => { // usa useEffect porque queremos cargar los restaurantes cuando se monta la pantalla
     console.log('Loading restaurants, please wait 2 seconds')
     setTimeout(() => {
       setRestaurants(getAll) // getAll function has to be imported
       console.log('Restaurants loaded')
     }, 2000)
-  }, [])
-  // How to render each item?
+  }, []) // array de dependencies [] = solo se ejecuta una vez al montar
+  // How to render each item? Mostrar cada restaurante:
   const renderRestaurant = ({ item }) => { // receives an item to be rendered
     return (
         <Pressable
           style={styles.row}
           onPress={() => {
+            // pones el nombre de la pantalla a la que quieres ir y un objeto que quieres pasar a esa pantalla
             navigation.navigate('RestaurantDetailScreen', { id: item.id }) //  When pressed, navigate to RestaurantDetailScreen
           }}>
             <TextRegular>
